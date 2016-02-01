@@ -10,4 +10,17 @@
 
 @interface Display : NSObject
 
+@property (strong, nonatomic) NSNumber *diagonal;
+@property (strong, nonatomic) NSNumber *numberOfColors;
+
+
+-(instancetype) initWithDiagonal: (NSNumber*) diagonal;
+-(instancetype) initWithDiagonal: (NSNumber*) diagonal
+               andNumberOfColors: (NSNumber*) numberOfColors;
+
++(Display *) displayWithDiagonal: (NSNumber*) diagonal;
++(Display *) displayWithDiagonal: (NSNumber*) diagonal
+               andNumberOfColors: (NSNumber*) numberOfColors;
+
+
 @end

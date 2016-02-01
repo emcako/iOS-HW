@@ -7,7 +7,14 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "GSM.h"
 
 @interface LocalData : NSObject
+
+-(NSArray*) phones;
+
+-(void) addPhone: (GSM *) phone;
+
+-(void) deletePhone: (GSM *) phone;
 
 @end

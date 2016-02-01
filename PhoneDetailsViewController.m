@@ -16,7 +16,26 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    self.title = [NSString stringWithFormat:@"%@ %@", self.phone.manifacturer, self.phone.model];
+    self.manifacturerLabel.text = self.phone.manifacturer;
+    self.modelLabel.text = self.phone.model;
+    self.priceLabel.text = [NSString stringWithFormat:@"%@", self.phone.price];
+    self.ownerLabel.text = self.phone.owner;
+    self.batteryModelLabel.text = self.phone.battery.batteryModel;
+    self.batteryIsdlLabel.text = [NSString stringWithFormat:@"%@",self.phone.battery.hoursIdle];
+    self.batteryTalkLabel.text = [NSString stringWithFormat:@"%@",self.phone.battery.hoursTalk];
+//    self.batteryTypeLabel.text = [NSString stringWithFormat:@"%ld",self.phone.battery.type];
+    
+    if (self.phone.battery.type == 1) {
+        self.batteryTypeLabel.text = @"LiIon";
+    } else if(self.phone.battery.type == 2){
+        self.batteryTypeLabel.text = @"NiMH";
+    }else if(self.phone.battery.type == 3){
+        self.batteryTypeLabel.text = @"NiCd";
+    }
+
+    self.diagonalLabel.text = [ NSString stringWithFormat:@"%@",self.phone.display.diagonal];
+    self.numberOfColorsLabel.text =[ NSString stringWithFormat:@"%@",self.phone.display.numberOfColors];
 }
 
 - (void)didReceiveMemoryWarning {

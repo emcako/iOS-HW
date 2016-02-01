@@ -7,7 +7,22 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "GSM.h"
 
 @interface PhoneDetailsViewController : UIViewController
+
+@property (strong, nonatomic) GSM* phone;
+@property (weak, nonatomic) IBOutlet UILabel *manifacturerLabel;
+@property (weak, nonatomic) IBOutlet UILabel *modelLabel;
+@property (weak, nonatomic) IBOutlet UILabel *priceLabel;
+
+@property (weak, nonatomic) IBOutlet UILabel *ownerLabel;
+
+@property (weak, nonatomic) IBOutlet UILabel *batteryModelLabel;
+@property (weak, nonatomic) IBOutlet UILabel *batteryIsdlLabel;
+@property (weak, nonatomic) IBOutlet UILabel *batteryTalkLabel;
+@property (weak, nonatomic) IBOutlet UILabel *batteryTypeLabel;
+@property (weak, nonatomic) IBOutlet UILabel *diagonalLabel;
+@property (weak, nonatomic) IBOutlet UILabel *numberOfColorsLabel;
 
 @end

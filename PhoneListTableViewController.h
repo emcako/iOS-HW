@@ -10,4 +10,6 @@
 
 @interface PhoneListTableViewController : UITableViewController
 
+@property NSArray *phones;
+
 @end

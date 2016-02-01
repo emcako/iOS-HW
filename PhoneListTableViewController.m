@@ -7,6 +7,10 @@
 //
 
 #import "PhoneListTableViewController.h"
+#import "GSM.h"
+#import "PhoneDetailsViewController.h"
+#import "AddPhoneViewController.h"
+#import "AppDelegate.h"
 
 @interface PhoneListTableViewController ()
 
@@ -17,82 +21,96 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
+    self.title = @"Phone List";
     
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    UIBarButtonItem *addBarButton =
+    [[UIBarButtonItem alloc]
+     initWithBarButtonSystemItem:UIBarButtonSystemItemAdd
+     target:self
+     action:@selector(showAdd)];
+    
+    self.navigationItem.rightBarButtonItem = addBarButton;
+    
+    
 }
+
+-(void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    AppDelegate *delegate = [UIApplication sharedApplication].delegate;
+    self.phones = [delegate.data phones];
+    [self.tableView reloadData];
+}
+
+//------------------------------------
+-(void) showAdd {
+    NSString *storyBoardId = @"addPhoneScene";
+    
+    AddPhoneViewController *addPhone = [self.storyboard instantiateViewControllerWithIdentifier:storyBoardId];
+    
+    [self.navigationController pushViewController:addPhone animated:YES];
+}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
 
-#pragma mark - Table view data source
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-#warning Incomplete implementation, return the number of sections
-    return 0;
+
+
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    //UITableViewCell *cell = [[UITableViewCell alloc] init];
+    
+    
+    static NSString* identifire = @"Ident";
+    
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifire];
+    
+    if (cell == nil) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
+                                      reuseIdentifier:identifire];
+    }
+    
+   GSM* phone =[self.phones objectAtIndex:indexPath.row];
+    
+    cell.textLabel.text = phone.manifacturer;
+    
+    return  cell;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-#warning Incomplete implementation, return the number of rows
-    return 0;
+    return self.phones.count;
 }
 
-/*
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
+
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *) indexPath {
     
-    // Configure the cell...
+    GSM *phone = [self.phones objectAtIndex:indexPath.row];
+    NSString *storyBoardId = @"detailsScene";
     
-    return cell;
+    PhoneDetailsViewController *details =
+    [self.storyboard instantiateViewControllerWithIdentifier:storyBoardId];
+    details.phone = phone;
+    
+    //         AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
+    //    appDelegate.window.rootViewController = detailsVC;
+    [self.navigationController pushViewController:details animated:YES];
 }
-*/
 
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
+-(void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    if( editingStyle == UITableViewCellEditingStyleDelete){
+        
+        AppDelegate* delegate = [UIApplication sharedApplication].delegate;
+        
+        [delegate.data deletePhone:[self.phones objectAtIndex:indexPath.row]];
+        
+        self.phones = [delegate.data phones];
+        
+        [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+    }
 }
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
-
 @end

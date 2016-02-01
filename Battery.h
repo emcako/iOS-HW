@@ -8,6 +8,35 @@
 
 #import <Foundation/Foundation.h>
 
+typedef NS_ENUM (NSInteger,BatteryType) {
+    LiIon = 1 ,
+    NiMH ,
+    NiCd 
+};
+
 @interface Battery : NSObject
 
+@property (strong, nonatomic) NSString *batteryModel;
+@property (strong, nonatomic) NSNumber *hoursIdle;
+@property (strong, nonatomic)  NSNumber *hoursTalk;
+@property BatteryType type;
+
+
+-(instancetype) initWithBatteryModel:(NSString*) batteryModel
+                           hoursIdle:(NSNumber*) hoursIdle
+                        andHoursTalk:(NSNumber*) hoursTalk;
+
+-(instancetype) initWithBatteryModel:(NSString*) batteryModel
+                           hoursIdle:(NSNumber*) hoursIdle
+                        andHoursTalk:(NSNumber*) hoursTalk
+                      andBatteryType:(BatteryType) type;
+
++(Battery *) batteryWithBatteryModel:(NSString*) batteryModel
+                           hoursIdle:(NSNumber*) hoursIdle
+                        andHoursTalk:(NSNumber*) hoursTalk;
+
++(Battery *) batteryWithBatteryModel:(NSString*) batteryModel
+                           hoursIdle:(NSNumber*) hoursIdle
+                        andHoursTalk:(NSNumber*) hoursTalk
+                      andBatteryType:(BatteryType) type;
 @end

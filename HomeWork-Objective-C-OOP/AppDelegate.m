@@ -16,7 +16,61 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    // Override point for customization after application launch.
+    self.data = [[LocalData alloc] init];
+    
+    NSArray *phones = [NSArray arrayWithObjects:[[GSM alloc] initWithManifacturer:@"Iphone"
+                                                                            model:@"4S"
+                                                                            price:@1000
+                                                                            owner:@"PESHO"
+                                                                          battery:[[Battery alloc] initWithBatteryModel:@"bt-1021"
+                                                                                                              hoursIdle:@49 andHoursTalk:@49
+                                                                                                         andBatteryType:(BatteryType)NiMH]
+                                                                          display:[[Display alloc] init]],
+                       
+                       [[GSM alloc] initWithManifacturer:@"Samsung"
+                                                   model:@"Galaxy S6"
+                                                   price:@900
+                                                   owner:@"Gosho"
+                                                 battery:[[Battery alloc] initWithBatteryModel:@"bt-9974"
+                                                                                     hoursIdle:@30 andHoursTalk:@30
+                                                                                andBatteryType:(BatteryType)LiIon]
+                                                 display:[[Display alloc] init]],
+                       
+                       [[GSM alloc] initWithManifacturer:@"Samsung"
+                                                   model:@"Galaxy S5"
+                                                   price:@600
+                                                   owner:@"Misho"
+                                                 battery:[[Battery alloc] initWithBatteryModel:@"bt-0074"
+                                                                                     hoursIdle:@10 andHoursTalk:@50
+                                                                                andBatteryType:(BatteryType)NiCd]
+                                                 display:[[Display alloc] initWithDiagonal:@8
+                                                                         andNumberOfColors:@545454]],
+                       
+                       [[GSM alloc] initWithManifacturer:@"Iphone"
+                                                   model:@"5C"
+                                                   price:@1000
+                                                   owner:@"Stamat"
+                                                 battery:[[Battery alloc] initWithBatteryModel:@"bt-9004"
+                                                                                     hoursIdle:@49 andHoursTalk:@49
+                                                                                andBatteryType:(BatteryType)NiMH]
+                                                 display:[[Display alloc] initWithDiagonal:@9
+                                                                         andNumberOfColors:@459000]],
+                       
+                       [[GSM alloc] initWithManifacturer:@"HTC"
+                                                   model:@"Desire S"
+                                                   price:@1000
+                                                   owner:@"Sasho"
+                                                 battery:[[Battery alloc] initWithBatteryModel:@"bt-9933"
+                                                                                     hoursIdle:@19 andHoursTalk:@19
+                                                                                andBatteryType:(BatteryType)NiMH]
+                                                 display:[[Display alloc] initWithDiagonal:@4
+                                                                         andNumberOfColors:@10000]]
+                       
+                       ,nil];
+    
+            [phones enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            [self.data addPhone:obj];
+                }];
     return YES;
 }
 

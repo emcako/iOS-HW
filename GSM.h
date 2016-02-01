@@ -12,20 +12,25 @@
 
 @interface GSM : NSObject
 
-@property NSString *model;
+@property (strong, nonatomic) NSString *manifacturer;
 
-@property NSString *manifacturer;
+@property (strong, nonatomic) NSString *model;
 
-@property NSNumber *price;
+@property (strong, nonatomic) NSNumber *price;
 
-@property NSString *owner;
+@property (strong, nonatomic) NSString *owner;
 
-@property Battery *battery;
+@property (strong, nonatomic) Battery *battery;
 
-@property Display *display;
+@property (strong, nonatomic) Display *display;
+
+
++(GSM*) IPhone5S;
+
 
 -(instancetype) initWithManifacturer:(NSString*)manifacturer
-                            andModel:(NSString*)model;
+                            andModel:(NSString*)model
+                            andPrice:(NSNumber*)price;
 
 -(instancetype) initWithManifacturer:(NSString*)manifacturer
                                model:(NSString*)model
@@ -34,6 +39,15 @@
                              battery:(Battery*)battery
                              display:(Display*)display;
 
++(GSM*) gsmManifacturer:(NSString*)manifacturer
+               andModel:(NSString*)model
+               andPrice:(NSNumber*)price;
 
++(GSM*) gsmWithManifacturer:(NSString*)manifacturer
+                      model:(NSString*)model
+                      price:(NSNumber*)price
+                      owner:(NSString*)owner
+                    battery:(Battery*)battery
+                    display:(Display*)display;
 
 @end
